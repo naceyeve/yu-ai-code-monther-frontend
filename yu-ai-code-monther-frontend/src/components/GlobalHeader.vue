@@ -10,23 +10,28 @@
       </a-menu-item>
     </a-menu>
     <div class="header-right">
-      <a-button type="primary">登录</a-button>
+      <a-button type="primary" @click="goLogin">登录</a-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const props = defineProps<{ menuItems: Array<{ key: string; label: string; path: string }> }>()
 const route = useRoute()
+const router = useRouter()
 const selectedKey = ref('')
 
 watchEffect(() => {
   const match = props.menuItems.find((item) => item.path === route.path)
   selectedKey.value = match ? match.key : ''
 })
+
+function goLogin() {
+  router.push('/user/login')
+}
 </script>
 
 <style scoped>
